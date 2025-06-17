@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$IDF - It's Definitely Fucked</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+        
+        body {
+            font-family: 'Share Tech Mono', monospace;
+            background-color: #000;
+            color: #0f0;
+            overflow-x: hidden;
+        }
+        
+        .glitch {
+            position: relative;
+        }
+        
+        .glitch::before, .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+        }
+        
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 #f00;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim-1 2s infinite linear alternate-reverse;
+        }
+        
+        .glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 #0ff;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim-2 2s infinite linear alternate-reverse;
+        }
+        
+        @keyframes glitch-anim-1 {
+            0% { clip: rect(32px, 9999px, 28px, 0); }
+            10% { clip: rect(13px, 9999px, 37px, 0); }
+            20% { clip: rect(45px, 9999px, 33px, 0); }
+            30% { clip: rect(31px, 9999px, 94px, 0); }
+            40% { clip: rect(88px, 9999px, 98px, 0); }
+            50% { clip: rect(9px, 9999px, 98px, 0); }
+            60% { clip: rect(37px, 9999px, 17px, 0); }
+            70% { clip: rect(77px, 9999px, 34px, 0); }
+            80% { clip: rect(55px, 9999px, 49px, 0); }
+            90% { clip: rect(10px, 9999px, 2px, 0); }
+            100% { clip: rect(35px, 9999px, 53px, 0); }
+        }
+        
+        @keyframes glitch-anim-2 {
+            0% { clip: rect(65px, 9999px, 119px, 0); }
+            10% { clip: rect(79px, 9999px, 66px, 0); }
+            20% { clip: rect(101px, 9999px, 114px, 0); }
+            30% { clip: rect(110px, 9999px, 89px, 0); }
+            40% { clip: rect(85px, 9999px, 25px, 0); }
+            50% { clip: rect(29px, 9999px, 116px, 0); }
+            60% { clip: rect(113px, 9999px, 45px, 0); }
+            70% { clip: rect(97px, 9999px, 102px, 0); }
+            80% { clip: rect(115px, 9999px, 74px, 0); }
+            90% { clip: rect(0px, 9999px, 100px, 0); }
+            100% { clip: rect(50px, 9999px, 53px, 0); }
+        }
+        
+        .flicker {
+            animation: flicker 3s linear infinite;
+        }
+        
+        @keyframes flicker {
+            0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+                opacity: 1;
+            }
+            20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+                opacity: 0.4;
+            }
+        }
+        
+        .alert-pulse {
+            animation: alert-pulse 2s infinite;
+        }
+        
+        @keyframes alert-pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 0, 0, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+            }
+        }
+        
+        .tag {
+            position: absolute;
+            animation: float 15s infinite linear;
+            opacity: 0.7;
+            z-index: 0;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(50px, 50px) rotate(90deg);
+            }
+            50% {
+                transform: translate(100px, 0) rotate(180deg);
+            }
+            75% {
+                transform: translate(50px, -50px) rotate(270deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+            }
+        }
+        
+        .radiation {
+            background: repeating-radial-gradient(
+                circle at center,
+                rgba(0, 255, 0, 0.1),
+                rgba(0, 255, 0, 0.1) 2px,
+                transparent 2px,
+                transparent 4px
+            );
+            background-size: 20px 20px;
+        }
+        
+        .terminal-border {
+            border: 1px solid #0f0;
+            box-shadow: 0 0 10px #0f0, inset 0 0 10px #0f0;
+        }
+        
+        .buy-button {
+            background: linear-gradient(45deg, #ff0000, #990000);
+            box-shadow: 0 0 20px #ff0000;
+            transition: all 0.3s ease;
+        }
+        
+        .buy-button:hover {
+            box-shadow: 0 0 30px #ff0000, 0 0 50px #ff0000;
+            transform: scale(1.05);
+        }
+        
+        .scroll-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #ff0000, #990000);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 0 10px #ff0000;
+            z-index: 99;
+        }
+        
+        .panic-meter {
+            height: 20px;
+            background: linear-gradient(to right, #00ff00, #ffff00, #ff0000);
+            position: relative;
+        }
+        
+        .panic-meter::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #fff;
+            animation: panic-move 2s infinite linear;
+        }
+        
+        @keyframes panic-move {
+            0% { right: 0; }
+            50% { right: 100%; }
+            51% { right: 100%; }
+            100% { right: 0; }
+        }
+    </style>
+</head>
+<body class="radiation bg-black">
+    <!-- Floating Tags -->
+    <div class="tag text-red-500 text-xl font-bold" style="top: 20%; left: 10%;">#WW3</div>
+    <div class="tag text-green-500 text-xl font-bold" style="top: 30%; left: 80%;">#Incoming</div>
+    <div class="tag text-yellow-500 text-xl font-bold" style="top: 70%; left: 15%;">#DegenAlert</div>
+    <div class="tag text-red-500 text-xl font-bold" style="top: 60%; left: 70%;">#Collapse</div>
+    <div class="tag text-green-500 text-xl font-bold" style="top: 10%; left: 50%;">#Panic</div>
+    <div class="tag text-yellow-500 text-xl font-bold" style="top: 80%; left: 60%;">#ApeIn</div>
+    
+    <!-- Header -->
+    <header class="container mx-auto px-4 py-10">
+        <div class="flex flex-col md:flex-row items-center justify-between">
+            <div class="flex items-center mb-6 md:mb-0">
+                <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-red-500 mr-4">
+                    <img src="https://i.imgur.com/JqYeZWn.jpg" alt="IDF Logo" class="w-full h-full object-cover">
+                </div>
+                <div>
+                    <h1 class="glitch text-4xl md:text-5xl font-bold text-green-500" data-text="It's Definitely Fucked">It's Definitely Fucked</h1>
+                    <p class="text-red-500 text-2xl md:text-3xl flicker">$IDF</p>
+                </div>
+            </div>
+            <div class="flex space-x-4">
+                <a href="#" class="text-green-500 hover:text-red-500"><i class="fab fa-twitter text-2xl"></i></a>
+                <a href="#" class="text-green-500 hover:text-red-500"><i class="fab fa-telegram text-2xl"></i></a>
+                <a href="#" class="text-green-500 hover:text-red-500"><i class="fab fa-discord text-2xl"></i></a>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="container mx-auto px-4 py-20 text-center">
+        <div class="terminal-border p-8 mb-10 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-full bg-black opacity-70"></div>
+            <div class="relative z-10">
+                <h2 class="text-3xl md:text-5xl font-bold text-red-500 mb-6 flicker">
+                    "With all the bullshit happening in the world, we genuinely think we've passed the point of no return... So yeah — IDF."
+                </h2>
+                <div class="alert-pulse inline-block px-6 py-3 bg-red-900 rounded-full mb-8">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    <span class="font-bold">ALERT: WORLD IS FUCKED</span>
+                    <i class="fas fa-exclamation-triangle ml-2"></i>
+                </div>
+                <div class="mt-10">
+                    <a href="#" class="buy-button text-white font-bold text-xl md:text-2xl px-10 py-4 rounded-full inline-block">
+                        BUY ON PUMP.FUN <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section class="container mx-auto px-4 py-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-green-500 mb-10 text-center glitch" data-text="// ABOUT THE COIN">// ABOUT THE COIN</h2>
+        <div class="terminal-border p-8">
+            <p class="text-lg mb-6">
+                $IDF is the world's first cryptocurrency powered by pure, unfiltered panic and sarcastic doomer energy. 
+                In a world where everything is clearly going to shit, we offer you the perfect asset to match the mood.
+            </p>
+            <p class="text-lg mb-6">
+                This isn't just another meme coin - it's a financial middle finger to the collapsing system, 
+                a hedge against the apocalypse, and the only investment that actually makes sense when you 
+                consider the current state of affairs.
+            </p>
+            <p class="text-lg text-red-500 font-bold flicker">
+                No utility. No promises. Just pure, beautiful acknowledgement that we're all fucked.
+            </p>
+        </div>
+    </section>
+    
+    <!-- Why IDF Section -->
+    <section class="container mx-auto px-4 py-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-red-500 mb-10 text-center glitch" data-text="// WHY IDF?">// WHY IDF?</h2>
+        <div class="terminal-border p-8">
+            <ul class="space-y-4">
+                <li class="flex items-start">
+                    <span class="text-green-500 mr-4">></span>
+                    <span>WW3 tensions at all-time high (perfect time to ape in)</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-green-500 mr-4">></span>
+                    <span>Global economy is a house of cards (we're the match)</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-green-500 mr-4">></span>
+                    <span>Climate change accelerating (enjoy the ride)</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-green-500 mr-4">></span>
+                    <span>AI about to take all our jobs (more time to shitpost)</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-green-500 mr-4">></span>
+                    <span>Traditional markets rigged (crypto is rigged too but at least we admit it)</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-green-500 mr-4">></span>
+                    <span>Everything's a bubble (might as well enjoy the pop)</span>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-green-500 mr-4">></span>
+                    <span class="text-red-500 font-bold flicker">Because what else are you going to do? Pretend everything's fine?</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+    
+    <!-- Tokenomics Section -->
+    <section class="container mx-auto px-4 py-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-green-500 mb-10 text-center glitch" data-text="// TOKENOMICS">// TOKENOMICS</h2>
+        <div class="terminal-border p-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold text-red-500 mb-4">Total Supply: 1,000,000,000 $IDF</h3>
+                    <ul class="space-y-3">
+                        <li class="flex justify-between">
+                            <span>Pump.fun:</span>
+                            <span class="text-green-500">93%</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Devs (for bunker supplies):</span>
+                            <span class="text-green-500">3%</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Chaos Reserve:</span>
+                            <span class="text-green-500">2%</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Airdrops (panic distribution):</span>
+                            <span class="text-green-500">2%</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-red-500 mb-4">Tax Structure:</h3>
+                    <ul class="space-y-3">
+                        <li class="flex justify-between">
+                            <span>Buy Tax:</span>
+                            <span class="text-green-500">0% (we're not monsters)</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Sell Tax:</span>
+                            <span class="text-green-500">0% (we know you'll paperhand)</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Panic Tax:</span>
+                            <span class="text-green-500">100% (if you sell during WW3)</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8 text-center">
+                <p class="text-red-500 font-bold flicker">
+                    Contract will be renounced when we hit 10x. Or when the nukes fly. Whichever comes first.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Roadmap Section -->
+    <section class="container mx-auto px-4 py-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-red-500 mb-10 text-center glitch" data-text="// ROADMAP">// ROADMAP</h2>
+        <div class="terminal-border p-8">
+            <div class="space-y-8">
+                <div class="flex flex-col md:flex-row">
+                    <div class="md:w-1/4 mb-4 md:mb-0">
+                        <h3 class="text-xl font-bold text-green-500">Phase 1: Launch</h3>
+                        <p class="text-sm">(Already fucked)</p>
+                    </div>
+                    <div class="md:w-3/4">
+                        <p>Deploy contract. Watch it pump. Watch it dump. Standard crypto experience.</p>
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row">
+                    <div class="md:w-1/4 mb-4 md:mb-0">
+                        <h3 class="text-xl font-bold text-green-500">Phase 2: Twitter Raid</h3>
+                        <p class="text-sm">(Spreading the panic)</p>
+                    </div>
+                    <div class="md:w-3/4">
+                        <p>Massive coordinated shitposting campaign targeting crypto Twitter, doomer accounts, and world leaders.</p>
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row">
+                    <div class="md:w-1/4 mb-4 md:mb-0">
+                        <h3 class="text-xl font-bold text-green-500">Phase 3: Fake Ceasefire</h3>
+                        <p class="text-sm">(Psychological warfare)</p>
+                    </div>
+                    <div class="md:w-3/4">
+                        <p>Announce peace treaty. Watch price pump. Reveal it was a joke. Watch price dump harder.</p>
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row">
+                    <div class="md:w-1/4 mb-4 md:mb-0">
+                        <h3 class="text-xl font-bold text-green-500">Phase 4: Nuclear Option</h3>
+                        <p class="text-sm">(Endgame)</p>
+                    </div>
+                    <div class="md:w-3/4">
+                        <p class="text-red-500 font-bold flicker">If we're all going out, we might as well make it meme-worthy.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- How to Buy Section -->
+    <section class="container mx-auto px-4 py-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-green-500 mb-10 text-center glitch" data-text="// HOW TO BUY">// HOW TO BUY</h2>
+        <div class="terminal-border p-8">
+            <ol class="space-y-6">
+                <li class="flex items-start">
+                    <span class="text-red-500 font-bold mr-4">1.</span>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Get SOL</h3>
+                        <p>Buy some SOL from an exchange. Or find some in the wreckage of the old financial system.</p>
+                    </div>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-red-500 font-bold mr-4">2.</span>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Connect Wallet</h3>
+                        <p>Use Phantom or whatever. We don't care. Your crypto, your problem.</p>
+                    </div>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-red-500 font-bold mr-4">3.</span>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Buy $IDF</h3>
+                        <p>Go to Pump.fun, search for "It's Definitely Fucked" or just look for the one that's red.</p>
+                    </div>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-red-500 font-bold mr-4">4.</span>
+                    <div>
+                        <h3 class="text-xl font-bold mb-2">Wait for Collapse</h3>
+                        <p class="text-red-500 font-bold flicker">This step is already in progress. Just sit back and enjoy.</p>
+                    </div>
+                </li>
+            </ol>
+            <div class="mt-10 text-center">
+                <a href="#" class="buy-button text-white font-bold text-xl px-10 py-4 rounded-full inline-block">
+                    BUY NOW BEFORE IT'S TOO LATE <i class="fas fa-radiation ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Community Section -->
+    <section class="container mx-auto px-4 py-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-red-500 mb-10 text-center glitch" data-text="// COMMUNITY">// COMMUNITY</h2>
+        <div class="terminal-border p-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold text-green-500 mb-4">Join the Panic:</h3>
+                    <div class="space-y-4">
+                        <a href="#" class="flex items-center text-lg hover:text-red-500">
+                            <i class="fab fa-twitter mr-3 text-2xl"></i>
+                            <span>Twitter: @ItsDefinitelyFucked</span>
+                        </a>
+                        <a href="#" class="flex items-center text-lg hover:text-red-500">
+                            <i class="fab fa-telegram mr-3 text-2xl"></i>
+                            <span>Telegram: t.me/IDFpanic</span>
+                        </a>
+                        <a href="#" class="flex items-center text-lg hover:text-red-500">
+                            <i class="fab fa-discord mr-3 text-2xl"></i>
+                            <span>Discord: discord.gg/IDFbunker</span>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-green-500 mb-4">Community Roles:</h3>
+                    <ul class="space-y-2">
+                        <li class="text-red-500">Target Locked (OG holders)</li>
+                        <li class="text-yellow-500">Red Button Club (Top 100)</li>
+                        <li class="text-green-500">Doomer Division (Active shillers)</li>
+                        <li class="text-gray-400">Paperhands (We forgive you)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8">
+                <h3 class="text-xl font-bold text-green-500 mb-2">Global Panic Meter:</h3>
+                <div class="panic-meter mb-2"></div>
+                <div class="flex justify-between text-xs">
+                    <span>Chill</span>
+                    <span>Concerned</span>
+                    <span>Panic</span>
+                    <span>Full Collapse</span>
+                </div>
+                <div class="mt-4 text-center">
+                    <p class="text-red-500 font-bold flicker">Current status: We're so fucked</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="container mx-auto px-4 py-10 text-center">
+        <div class="terminal-border p-8">
+            <h2 class="text-2xl md:text-3xl font-bold text-red-500 mb-6 flicker">
+                "We're not a project. We're a cry for help."
+            </h2>
+            <p class="mb-6">
+                $IDF is a meme coin with no intrinsic value or expectation of financial return. 
+                There is no formal team or roadmap. The project is completely useless and for entertainment purposes only.
+            </p>
+            <p class="text-green-500">
+                © 2025 It's Definitely Fucked. All rights reserved. Or not. Who cares anymore?
+            </p>
+        </div>
+    </footer>
+    
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" id="scrollTop">
+        <i class="fas fa-radiation text-white"></i>
+    </div>
+    
+    <script>
+        // Scroll to top button
+        document.getElementById('scrollTop').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Show/hide scroll button based on scroll position
+        window.addEventListener('scroll', function() {
+            const scrollTop = document.getElementById('scrollTop');
+            if (window.pageYOffset > 300) {
+                scrollTop.style.display = 'flex';
+            } else {
+                scrollTop.style.display = 'none';
+            }
+        });
+        
+        // Create more floating tags dynamically
+        function createFloatingTags() {
+            const tags = [
+                '#WW3', '#Collapse', '#Panic', '#ApeIn', '#Degen', 
+                '#FOMO', '#RugPull', '#EndTimes', '#Bunker', '#LastTrade'
+            ];
+            const colors = ['text-red-500', 'text-green-500', 'text-yellow-500'];
+            
+            for (let i = 0; i < 5; i++) {
+                const tag = document.createElement('div');
+                tag.className = `tag ${colors[Math.floor(Math.random() * colors.length)]} text-lg font-bold`;
+                
+                // Random position
+                const top = Math.random() * 90;
+                const left = Math.random() * 90;
+                
+                tag.style.top = `${top}%`;
+                tag.style.left = `${left}%`;
+                tag.textContent = tags[Math.floor(Math.random() * tags.length)];
+                
+                // Random animation duration
+                const duration = 10 + Math.random() * 20;
+                tag.style.animationDuration = `${duration}s`;
+                
+                document.body.appendChild(tag);
+            }
+        }
+        
+        // Call the function when page loads
+        window.addEventListener('load', createFloatingTags);
+        
+        // Add some terminal-like typing effect
+        const terminalTexts = document.querySelectorAll('.terminal-border p, .terminal-border li');
+        terminalTexts.forEach((text, index) => {
+            const originalText = text.textContent;
+            text.textContent = '';
+            
+            let i = 0;
+            const typing = setInterval(() => {
+                if (i < originalText.length) {
+                    text.textContent += originalText.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(typing);
+                }
+            }, 10 + Math.random() * 20);
+        });
+    </script>
+</body>
+</html>
